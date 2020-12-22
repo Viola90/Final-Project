@@ -1,0 +1,77 @@
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css')}}">
+    </head>
+    <body style="background-image: url({{url_for('static',filename='img/bg.jpg')}}); background-repeat: no-repeat; background-attachment: fixed; background-size: cover; ">
+        <div class="container">
+            <div class="content">
+                <h1>CRIME ANALYSIS</h1><br>
+                <h4>Here you go with the tables!!!</h4><br>
+                <div class="left">
+                    <form action="\datareport" method="POST">
+                        <input type="radio" name="exampleRadios" id="Police_Station" value="optn1"/>
+                            <label for="Police_Station">
+                                Display Police Station <br> <br>
+                            </label>
+                         <input type="radio" name="exampleRadios" id="IPC" value="optn2"/>
+                            <label for="IPC">
+                                Display  IPC <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="Police_Officer" value="optn3"/>
+                            <label for="Police_Officer">
+                                Display  Police Officer <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="FIR" value="optn4"/>
+                            <label for="FIR">
+                                Display  FIR <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="Case" value="optn5"/>
+                            <label for="Case">
+                                Display  Case <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="Victims" value="optn6"/>
+                            <label for="Victims">
+                                Display  Victim <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="Criminals" value="optn7"/>
+                            <label for="Criminals">
+                                Display  Criminal <br> <br>
+                            </label>
+                        <input type="radio" name="exampleRadios" id="Insert_PS" value="optn8"/>
+                            <label for="Insert_PS">
+                                Insert  Police Station<br> <br>
+                            </label>
+                        Enter the station ID: <input type="text" name="Insert_PS_v1"/><br>
+                        Enter the station name: <input type="text" name="Insert_PS_v2"/><br>
+                        Enter the station address: <input type="text" name="Insert_PS_v3"/><br>
+                        Enter the station number of officers: <input type="text" name="Insert_PS_v4"/><br><br>
+                        <input type="radio" name="exampleRadios" id="Delete_crimi" value="optn9"/>
+                            <label for="Delete_crimi">
+                                Delete  Criminal<br> <br>
+                            </label>
+                        Enter the Criminal ID to be deleted: <input type="text" name="Delete_criminal"/><br><br>
+                        <input type="radio" name="exampleRadios" id="Update_fir" value="optn10"/>
+                            <label for="Update_fir">
+                                Update  FIR<br> <br>
+                            </label>
+                        Enter the FIR Number to be updated: <input type="text" name="Update_fir1"/><br>
+                        Enter the new Complainant name: <input type="text" name="Update_fir2"/><br><br>
+                </div>
+                <table border=0>
+                    <tr>
+                        <td>
+                            <input type="submit" class="content" value="Submit" name="submit"/>
+                        </td>
+                        <td>
+                            <input type="reset" class="content" value="Reset" name="reset"/>
+                        </td>
+                    </tr> 
+                </table>
+                <div class=right>
+                <h5> Viola D Souza <br> 2048060 </h5> 
+                </div>
+            </div> 
+        </div> 
+                    </form>
+    </body>
+</html>

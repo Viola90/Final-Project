@@ -1,0 +1,178 @@
+CREATE TABLE police_station 
+( station_id int PRIMARY KEY,     
+  s_name varchar(50) NOT NULL,   
+  s_address varchar(50) NOT NULL,   
+  number_of_officers int NOT NULL);
+
+INSERT INTO  police_station 
+VALUES (1041, 'Mastikatta Forest', 'Ankola', 15);
+
+INSERT INTO  police_station 
+VALUES (502, 'Muradeshwara P S', 'Bhatkal', 32);
+
+INSERT INTO  police_station 
+VALUES (1038, 'Gunda Forest', 'Haliyal', 38);
+
+CREATE TABLE ipc 
+(ipc_section varchar(5) PRIMARY KEY,   
+Crime_name varchar(20) NOT NULL,   
+Crime_description varchar(50) NOT NULL);
+
+INSERT INTO  ipc 
+VALUES ('302', 'Murder', 'whoever commits murder shall be punished');
+
+INSERT INTO  ipc 
+VALUES ('376', 'Rape', 'The rapist shall be punished');
+
+INSERT INTO  ipc 
+VALUES ('420', 'Cheating', 'whoever cheats shall be punished');
+
+INSERT INTO  ipc 
+VALUES ('292', 'Defamation', 'whoever shares morphed picture shall be punished');
+
+INSERT INTO  ipc 
+VALUES ('499', 'Illegal photo', 'photo used without consent of person is punishable');
+
+CREATE TABLE police_officer 
+( p_id varchar(10) PRIMARY KEY,     
+  p_name varchar(25) NOT NULL,   
+  p_address varchar(50) NOT NULL,   
+  p_designation varchar(15) NOT NULL,   
+  p_age int NOT NULL, 
+  p_phone_number bigint NOT NULL, 
+  date_of_joining DATE NOT NULL, 
+  number_of_cases_solved int NOT NULL, 
+station_id int NOT NULL, 
+CONSTRAINT fk_police_officer foreign key (station_id) REFERENCES police_station (station_id)); 
+
+INSERT INTO  police_officer 
+VALUES ('S001', 'Sudha', 'Bondel', 'SI', 32, 9449339222, '07-Apr-11', 34, 502);
+
+INSERT INTO  police_officer 
+VALUES ('S346', 'Karthik', 'Jeppu', 'Inspector', 45, 9444884222, '12-Jun-05', 50, 1038);
+
+INSERT INTO  police_officer 
+VALUES ('S435', 'Harsh', 'Kankanady', 'Dy.SP', 43, 9467837222, '28-Sep-07', 34, 502);
+
+INSERT INTO  police_officer 
+VALUES ('S039', 'Viola', 'Karkala', 'SI', 52, 9449342478, '07-Jul-99', 14, 1041);
+
+CREATE TABLE fir  
+( fir_no varchar(10) PRIMARY KEY,     
+  f_description varchar(50) NOT NULL,   
+  complainant_name varchar(15) NOT NULL,   
+  complainant_phone_number bigint NOT NULL, 
+  complainant_address varchar(50) NOT NULL,   
+  f_date DATE NOT NULL, 
+  p_id varchar(10) NOT NULL, 
+CONSTRAINT fk_fir foreign key (p_id) REFERENCES police_officer (p_id));
+
+INSERT INTO  fir 
+VALUES ('B01', 'Murder', 'Krithi', 9468883922, 'Shirva', '13-Apr-15', 'S001');
+
+INSERT INTO  fir 
+VALUES ('C05', 'Rape', 'Gaurav', 9227667551, 'Nantoor', '07-Sep-17', 'S435');
+
+INSERT INTO  fir 
+VALUES ('C35', 'Murder', 'Rachael', 9468883922, 'Bajpe', '31-Mar-18', 'S001');
+
+INSERT INTO  fir 
+VALUES ('D34', 'Defamation', 'Leon', 9372949029, 'Karwar', '31-Mar-18', 'S435');
+
+INSERT INTO  fir 
+VALUES ('E45', 'Illegal photo', 'Kanan', 9468222098, 'Mandya', '31-Mar-18', 'S346');
+
+CREATE TABLE casesz 
+(case_no varchar(10) PRIMARY KEY, 
+description varchar(50) NOT NULL,   
+status varchar(10) NOT NULL,   
+n_lives_lost int NOT NULL, 
+n_lives_injured int NOT NULL, 
+stolen_property_value int NOT NULL, 
+damaged_property_value int NOT NULL, 
+place_lat int NOT NULL, 
+place_long int NOT NULL, 
+date_solved DATE NOT NULL, 
+witness_name varchar(10) NOT NULL, 
+witness_phone_number bigint NOT NULL, 
+witness_address varchar(50) NOT NULL,  
+suspect_name varchar(10),  
+suspect_phone_number bigint, 
+suspect_address varchar(50),   
+ipc_section varchar(5) NOT NULL, 
+fir_no varchar(10) NOT NULL, 
+CONSTRAINT casesz_fir_no_fk foreign key (fir_no) REFERENCES fir (fir_no), 
+CONSTRAINT casesz_ipc_section_fk foreign key (ipc_section) REFERENCES ipc (ipc_section));
+
+INSERT INTO  casesz 
+VALUES('AD001', 'Murder', 'Solved', 2, 0, 0, 0, 13.899359, 74.522710,'5-Jun-2015', 'Jyothi', 9238523456, 'Shirva', 'Arnav',8239992758,'Shirva','302','B01');
+
+INSERT INTO  casesz 
+VALUES('AD002', 'Rape', 'Solved', 1, 0, 0, 0, 12.099642, 74.800872, '23-Dec-2017', 'Payal', 7845673994, 'Nantoor', 'Ramesh', 8294592758, 'Nantoor','376','C05');
+
+INSERT INTO  casesz 
+VALUES('AD003', 'Murder', 'Re-open', 5, 0, 0, 0, 12.894052, 74.840540, '14-Sep-2019', 'Keerthan', 6354447689, 'Bajpe', '', '',  0, '302', 'C35')
+
+INSERT INTO  casesz 
+VALUES('AD004', 'Cheating', 'Open', 0, 0, 0, 0, 11.894002, 64.845540, '14-Nov-2019', 'Santhosh', 6355697689, 'Jayanagar', '', '',  0, '420', 'E45');
+
+INSERT INTO  casesz 
+VALUES('AD005', 'Defamation', 'Sloved', 0, 0, 0, 0, 11.894002, 64.845540, '17-Nov-2016', 'Sunitha', 9055697689, 'Jayanagar', '', '',  0, '292', 'E45')
+
+INSERT INTO  casesz 
+VALUES('AD006', 'Illegal photo', 'Solved', 0, 0, 0, 0, 9.780002, 58.869540, '17-Nov-2012', 'Waran', 9055657689, 'Hapankatta', '', '',  0, '499', 'E45');
+
+CREATE TABLE victim 
+( v_id varchar(10) PRIMARY KEY, 
+v_name varchar(20) NOT NULL,   
+v_gender varchar(10) NOT NULL, 
+v_dob DATE NOT NULL, 
+v_phone_number bigint NOT NULL, 
+v_address varchar(50) NOT NULL,   
+v_condition varchar(10) NOT NULL, 
+case_no varchar(10) NOT NULL, 
+age int NOT NULL,
+CONSTRAINT fk_victim foreign key (case_no) REFERENCES casesz (case_no));
+
+INSERT INTO  victim 
+VALUES('Vk01', 'Henry', 'Male', '24-May-1969', 0, 'Shirva','Dead', 'AD001',51);
+
+INSERT INTO  victim 
+VALUES('Vk02', 'Mary', 'Female','08-Mar-1972', 0, 'Shirva','Dead','AD001',48);
+
+INSERT INTO  victim 
+VALUES('Vm01', 'Rekha', 'Female', '05-Aug-1995', 0, 'Nantoor', 'Dead', 'AD002',25);
+
+INSERT INTO  victim 
+VALUES('Vl04', 'Sahil', 'Male', '05-Jan-1978', 0, 'Nantoor', 'Dead', 'AD003', 42);
+
+INSERT INTO  victim 
+VALUES('Vkn01', 'Kantha', 'Female', '12-May-1966', 7389264810, 'Statebank', 'Alive', 'AD004', 54);
+
+INSERT INTO  victim 
+VALUES('Vh09', 'Venessa', 'Female', '20-Sep-2000', 9861103972, 'Pajir', 'Alive', 'AD006', 20);
+
+CREATE TABLE criminal 
+(c_id varchar(10) PRIMARY KEY, 
+c_name varchar(25) NOT NULL,   
+c_gender varchar(10) NOT NULL, 
+c_dob DATE NOT NULL, 
+c_phone_number bigint NOT NULL, 
+c_address varchar(50) NOT NULL,   
+c_height_in_cm int NOT NULL, 
+c_weight_in_kg int NOT NULL, 
+c_nationality varchar(20) NOT NULL, 
+c_eyecolor varchar(10) NOT NULL, 
+v_id varchar(10) NOT NULL, 
+age int NOT NULL,
+CONSTRAINT fk_criminal foreign key (v_id) REFERENCES victim (v_id));
+
+INSERT INTO  criminal 
+VALUES ('No17', 'Arnav', 'Male', '23-Sep-1978', 8239992758, 'Shirva', 158, 70, 'Indian', 'Brown', 'Vk01',42);
+
+INSERT INTO  criminal 
+VALUES ('No18', 'Ramesh', 'Male', '16-May-1962', 8294592758, 'Nantoor', 162, 98, 'Indian', 'Black', 'Vm01',58);
+
+INSERT INTO  criminal 
+VALUES ('No19', 'Sunil', 'Male', '02-Dec-1965', 6745690034, 'Nantoor', 158, 70, 'Indian', 'Brown', 'Vm01',55);
+
